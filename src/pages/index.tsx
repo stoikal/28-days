@@ -8,6 +8,7 @@ import NextLink from 'next/link'
 
 const content = [
   { title: 'Day 1 - Responsive Canvas', subtitle: 'Canvas API' },
+  { title: 'Day 2 - spacehip pew pew', subtitle: 'Canvas API' },
 ]
 
 export default function Home () {
