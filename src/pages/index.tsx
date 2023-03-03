@@ -9,6 +9,7 @@ import NextLink from 'next/link'
 const content = [
   { title: 'Day 1 - Responsive Canvas', subtitle: 'Canvas API' },
   { title: 'Day 2 - spacehip pew pew', subtitle: 'Canvas API' },
+  { title: 'Day 3 - Overly Attached Page', subtitle: 'Page Visibility API' },
 ]
 
 export default function Home () {
