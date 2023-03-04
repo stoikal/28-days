@@ -40,25 +40,23 @@ const MORSE_CODE_MAP: Record<string, string> = {
   8: '---..',
   9: '----.',
 
-  '.': '.-.-.-', // period
-  ',': '--..--', // coma
-  ' ': '/' // space
+  '.': '.-.-.-',
+  ',': '--..--',
+  ' ': '/'
 }
 
 const BASE_DURATION = 100
-const multiplier: Record<string, number> = {
+const MULTIPLIER: Record<string, number> = {
   '.': 1,
   '-': 3,
   ' ': 3,
   '/': 1
 }
-const silentChars = [' ', '/']
 
-const toMorse = (str: string) => {
-  const input = str
-    .replace(/(\.|,)\s+/g, (v) => v)
+const SILENT_CHARS = [' ', '/']
 
-  return input
+const toMorse = (inputText: string) => {
+  return inputText
     .toLowerCase()
     .split('')
     .map((char) => MORSE_CODE_MAP[char])
@@ -68,23 +66,24 @@ const toMorse = (str: string) => {
 const toVibrationPattern = (morse: string) => {
   const pattern: number[] = []
 
-  let patternItem = 0
+  let silenceDuration = 0
 
   Array.from(morse)
     .forEach((item, index) => {
-      const isSilent = silentChars.includes(item)
+      const isSilent = SILENT_CHARS.includes(item)
 
       if (isSilent) {
-        patternItem += multiplier[item] * BASE_DURATION
+        silenceDuration += MULTIPLIER[item] * BASE_DURATION
       } else {
-        if (patternItem) {
-          pattern.push(patternItem)
-          patternItem = 0
+        if (silenceDuration) {
+          pattern.push(silenceDuration)
+          silenceDuration = 0
         } else if (index > 0) {
           pattern.push(BASE_DURATION)
         }
 
-        pattern.push(multiplier[item] * BASE_DURATION)
+        const vibrationDuration = MULTIPLIER[item] * BASE_DURATION
+        pattern.push(vibrationDuration)
       }
     })
 
@@ -92,7 +91,9 @@ const toVibrationPattern = (morse: string) => {
 }
 
 export default function Day4 () {
-  const [input, setInput] = useState('')
+  const [inputText, setInputText] = useState('')
+
+  const MAX_INPUT_LENGTH = 10
 
   const handleClick = () => {
     try {
@@ -105,13 +106,14 @@ export default function Day4 () {
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target
     const filtered = value
+      .trimStart()
       .replace(/\s+/g, ' ')
       .replace(/[^a-zA-Z0-9,.\s]/g, '')
 
-    setInput(filtered)
+    setInputText(filtered)
   }
 
-  const output = toMorse(input)
+  const output = toMorse(inputText)
 
   const vibrateMorseCode = () => {
     try {
@@ -148,14 +150,14 @@ export default function Day4 () {
             <div className='mb-2'>
               <textarea
                 className="border w-full py-1 px-2"
-                value={input}
+                value={inputText}
                 rows={2}
-                maxLength={10}
+                maxLength={MAX_INPUT_LENGTH}
                 onChange={handleInput}
               />
               <div className="text-right">
                 <small className="text-xs">
-                  {input.length} / 10
+                  {inputText.length} / {MAX_INPUT_LENGTH}
                 </small>
               </div>
             </div>
