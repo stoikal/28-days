@@ -20,9 +20,6 @@ export default function Day2 () {
     }
   }, [])
 
-  useCallback(() => {
-  }, [tick])
-
   return (
     <>
      <Head>

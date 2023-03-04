@@ -1,15 +1,6 @@
 import { useKeys } from '@/hooks/useKeys'
 import { useSpaceShip } from '@/hooks/useSpaceShip'
 import { useEffect, useRef, useState } from 'react'
-// import { useCallback, useEffect, useRef, useState } from 'react'
-// import { useSpaceShip } from '@/hooks/useSpaceShip'
-
-// const Main = styled.main`
-//   height: 100vh;
-//   background: black;
-//   display: grid;
-//   place-items: center;
-// `
 
 type Props = {
   tick: number
@@ -28,35 +19,26 @@ export default function Canvas ({ tick }: Props) {
 
   const canvasRef = useRef(null)
 
-  // const { canvas } = useMemo(() => {
-  //   if (canvasRef.current === null) return null
-
-  //   const canvas = canvasRef.current as HTMLCanvasElement
-  //   const c = canvas.getContext('2d') as CanvasRenderingContext2D
-
-  //   return {
-  //     canvas
-  //   }
-  // }, [canvasRef])
-
   const { keys } = useKeys()
   const ship = useSpaceShip()
 
   const updateShip = () => {
     if (
-      (keys.left.pressed && ship.revolution < 180) ||
-      (keys.right.pressed && ship.revolution >= 180) ||
-      (keys.up.pressed && ship.revolution >= 90 && ship.revolution < 270) ||
-      (keys.down.pressed && (ship.revolution < 90 || ship.revolution >= 270))
+      (keys.left.pressed && ship.angle < 180) ||
+      (keys.right.pressed && ship.angle >= 180) ||
+      (keys.up.pressed && ship.angle >= 90 && ship.angle < 270) ||
+      (keys.down.pressed && (ship.angle < 90 || ship.angle >= 270))
     ) {
-      ship.addRevolution()
+      // move clockwise
+      ship.addAngle()
     } else if (
-      (keys.left.pressed && ship.revolution !== 180) ||
-      (keys.right.pressed && ship.revolution !== 0) ||
-      (keys.up.pressed && ship.revolution !== 270) ||
-      (keys.down.pressed && ship.revolution !== 90)
+      (keys.left.pressed && ship.angle !== 180) ||
+      (keys.right.pressed && ship.angle !== 0) ||
+      (keys.up.pressed && ship.angle !== 270) ||
+      (keys.down.pressed && ship.angle !== 90)
     ) {
-      ship.subRevolution()
+      // move counterclockwise
+      ship.substractAngle()
     }
   }
 
@@ -73,6 +55,7 @@ export default function Canvas ({ tick }: Props) {
         .map(([angle, distance]) => [angle, distance - 0.01])
         .filter(([angle, distance]) => {
           if (canvasRef.current === null) return false
+          
           const canvas = canvasRef.current as HTMLCanvasElement
           const cx = canvas.width / 2
           const cy = canvas.height / 2
@@ -97,7 +80,7 @@ export default function Canvas ({ tick }: Props) {
 
       if (fire) {
         setIsFired(true)
-        next.push([ship.revolution, 1])
+        next.push([ship.angle, 1])
       }
 
       return next as Bullet[]
@@ -174,33 +157,16 @@ export default function Canvas ({ tick }: Props) {
     const cy = canvas.height / 2
     const radius = 0.8 * (canvas.width / 2)
 
-    // c.strokeStyle = 'grey'
-    // c.beginPath();
-    // c.arc(cx, cy, radius, 0, 2 * Math.PI);
-    // c.stroke();
-
-    // c.strokeStyle = 'grey'
-    // c.beginPath();
-    // c.moveTo(cx, 0)
-    // c.lineTo(cx, canvas.height)
-    // c.stroke()
-
-    // c.strokeStyle = 'grey'
-    // c.beginPath();
-    // c.moveTo(0, cy)
-    // c.lineTo(canvas.width, cy)
-    // c.stroke()
-
     const r = radius
 
     const foot = Math.sqrt(Math.pow(r + ship.height, 2) + Math.pow(ship.base / 2, 2))
     const rad2 = Math.atan(ship.base / 2 / (r + ship.height))
 
-    const angle = (rad2 * 180 / Math.PI) + ship.revolution
-    const angle3 = ship.revolution - (rad2 * 180 / Math.PI)
+    const angle = (rad2 * 180 / Math.PI) + ship.angle
+    const angle3 = ship.angle - (rad2 * 180 / Math.PI)
 
-    const x1 = cx + r * Math.cos(ship.revolution * Math.PI / 180)
-    const y1 = cy + r * Math.sin(ship.revolution * Math.PI / 180)
+    const x1 = cx + r * Math.cos(ship.angle * Math.PI / 180)
+    const y1 = cy + r * Math.sin(ship.angle * Math.PI / 180)
     const x2 = cx + foot * Math.cos(angle * Math.PI / 180)
     const y2 = cy + foot * Math.sin(angle * Math.PI / 180)
     const x3 = cx + foot * Math.cos(angle3 * Math.PI / 180)

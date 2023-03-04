@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
 export const useSpaceShip = () => {
-  const [revolution, setRevolution] = useState(90)
+  // angle from center; 0 is 3 o'clock
+  const [angle, setAngle] = useState(90)
 
   const speed = 1
 
-  const addRevolution = () => {
-    setRevolution((prev) => {
+  const addAngle = () => {
+    setAngle((prev) => {
       const delta = 360 - prev
       if (delta <= speed) {
         return 0 + speed - delta
@@ -16,8 +17,8 @@ export const useSpaceShip = () => {
     })
   }
 
-  const subRevolution = () => {
-    setRevolution((prev) => {
+  const substractAngle = () => {
+    setAngle((prev) => {
       if (prev - speed < 0) {
         return prev + 360 - speed
       } else {
@@ -27,10 +28,10 @@ export const useSpaceShip = () => {
   }
 
   return {
-    revolution,
+    angle,
     height: 10,
     base: 10,
-    addRevolution,
-    subRevolution
+    addAngle,
+    substractAngle
   }
 }
