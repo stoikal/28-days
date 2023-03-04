@@ -6,18 +6,23 @@ type Props = {
   tick: number
 }
 
-type Bullet = [number, number]
+type Bullet = {
+  angle: number
+  distance: number
+}
+
 type Enemy = {
   angle: number
   radius: number
   hit: boolean
+  explode: boolean
 }
 
 export default function Canvas ({ tick }: Props) {
-  const [bullets, setBullets] = useState<Bullet[]>([])
-  const [enemies, setEnemies] = useState<Enemy[]>([])
-
   const canvasRef = useRef(null)
+
+  const bulletsRef = useRef<Bullet[]>([])
+  const enemiesRef = useRef<Enemy[]>([])
 
   const { keys } = useKeys()
   const ship = useSpaceShip()
@@ -50,95 +55,76 @@ export default function Canvas ({ tick }: Props) {
       setIsFired(false)
     }
 
-    setBullets((prev) => {
-      const next = prev
-        .map(([angle, distance]) => [angle, distance - 0.01])
-        .filter(([angle, distance]) => {
-          if (canvasRef.current === null) return false
+    const bullets = bulletsRef.current
+      .map(({ angle, distance }) => ({ angle, distance: distance - 0.01 }))
+      .filter(({ angle, distance }) => {
+        if (canvasRef.current === null) return false
 
-          const canvas = canvasRef.current as HTMLCanvasElement
-          const cx = canvas.width / 2
-          const cy = canvas.height / 2
-          const radius = 0.8 * (canvas.width / 2)
+        const canvas = canvasRef.current as HTMLCanvasElement
+        const cx = canvas.width / 2
+        const cy = canvas.height / 2
+        const radius = 0.8 * (canvas.width / 2)
 
-          const bulletX = cx + (radius * distance) * Math.cos(angle * Math.PI / 180)
-          const bulletY = cy + (radius * distance) * Math.sin(angle * Math.PI / 180)
+        const bulletX = cx + (radius * distance) * Math.cos(angle * Math.PI / 180)
+        const bulletY = cy + (radius * distance) * Math.sin(angle * Math.PI / 180)
 
-          return distance > 0 && enemies.every((enemy) => {
-            const enemyCX = cx + enemy.radius * Math.cos(enemy.angle * Math.PI / 180)
-            const enemyCY = cy + enemy.radius * Math.sin(enemy.angle * Math.PI / 180)
+        let isColliding = false
 
-            const o = Math.abs(bulletX - enemyCX)
-            const a = Math.abs(bulletY - enemyCY)
-            const h = Math.sqrt(Math.pow(a, 2) + Math.pow(o, 2))
+        for (const enemy of enemiesRef.current) {
+          const enemyCX = cx + enemy.radius * Math.cos(enemy.angle * Math.PI / 180)
+          const enemyCY = cy + enemy.radius * Math.sin(enemy.angle * Math.PI / 180)
 
-            const isColliding = h < 5 - 1
+          const o = Math.abs(bulletX - enemyCX)
+          const a = Math.abs(bulletY - enemyCY)
+          const h = Math.sqrt(Math.pow(a, 2) + Math.pow(o, 2))
 
-            return !isColliding
-          })
-        })
+          if (h < 5) {
+            isColliding = true
+            enemy.hit = true
+            break
+          }
+        }
 
-      if (fire) {
-        setIsFired(true)
-        next.push([ship.angle, 1])
-      }
+        return !isColliding && distance > 0
+      })
 
-      return next as Bullet[]
-    })
+    if (fire) {
+      setIsFired(true)
+      bullets.push({
+        angle: ship.angle,
+        distance: 1
+      })
+    }
+
+    bulletsRef.current = bullets
   }
 
   const [lastEnemySpawn, setLastEnemySpawn] = useState(0)
-  const [, setHitCount] = useState(0)
 
   const updateEnemies = () => {
-    setEnemies((prev) => {
-      const next = prev
-        .filter((enemy) => {
-          return !enemy.hit && enemy.radius < 1000
-        })
-        .map((enemy) => ({
+    const enemies = enemiesRef.current
+      .filter(enemy => {
+        return !enemy.explode && enemy.radius < 1000
+      })
+      .map(enemy => {
+        return {
           ...enemy,
           radius: enemy.radius + 0.1,
-          hit: (() => {
-            if (enemy.hit) return true
-            if (canvasRef.current === null) return false
-            const canvas = canvasRef.current as HTMLCanvasElement
-            const cx = canvas.width / 2
-            const cy = canvas.height / 2
-            const radius = 0.8 * (canvas.width / 2)
+          explode: enemy.hit
+        }
+      })
 
-            const enemyCX = cx + enemy.radius * Math.cos(enemy.angle * Math.PI / 180)
-            const enemyCY = cy + enemy.radius * Math.sin(enemy.angle * Math.PI / 180)
+    if (tick - lastEnemySpawn > 200 || lastEnemySpawn === 0) {
+      setLastEnemySpawn(tick)
+      enemies.push({
+        angle: Math.random() * (359 - 0) + 0,
+        radius: 5,
+        hit: false,
+        explode: false
+      })
+    }
 
-            return bullets.some(([angle, distance], index) => {
-              const bulletX = cx + (radius * distance) * Math.cos(angle * Math.PI / 180)
-              const bulletY = cy + (radius * distance) * Math.sin(angle * Math.PI / 180)
-
-              const o = Math.abs(bulletX - enemyCX)
-              const a = Math.abs(bulletY - enemyCY)
-              const h = Math.sqrt(Math.pow(a, 2) + Math.pow(o, 2))
-
-              const isColliding = h <= 5
-
-              if (isColliding) {
-                setHitCount(prev => prev + 1)
-              }
-              return isColliding
-            })
-          })()
-        }))
-
-      if (tick - lastEnemySpawn > 200 || lastEnemySpawn === 0) {
-        setLastEnemySpawn(tick)
-        next.push({
-          angle: Math.random() * (359 - 0) + 0,
-          radius: 5,
-          hit: false
-        })
-      }
-
-      return next as Enemy[]
-    })
+    enemiesRef.current = enemies
   }
 
   const draw = () => {
@@ -180,8 +166,7 @@ export default function Canvas ({ tick }: Props) {
     c.strokeStyle = 'white'
     c.stroke()
 
-    // bullets
-    bullets.forEach(([angle, distance]) => {
+    bulletsRef.current.forEach(({ angle, distance }) => {
       c.beginPath()
       c.moveTo(
         cx + (r * distance) * Math.cos(angle * Math.PI / 180),
@@ -195,7 +180,7 @@ export default function Canvas ({ tick }: Props) {
       c.stroke()
     })
 
-    enemies.forEach((enemy) => {
+    enemiesRef.current.forEach((enemy) => {
       c.beginPath()
       c.strokeStyle = 'white'
       if (enemy.hit) c.strokeStyle = 'red'
