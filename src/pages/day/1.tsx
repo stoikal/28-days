@@ -65,7 +65,7 @@ export default function Day1 () {
       <main
         style={{
           height: 'calc(100vh - 32px)',
-          margin: CANVAS_PADDING,
+          margin: CANVAS_PADDING
         }}
       >
         <canvas ref={canvasRef} />

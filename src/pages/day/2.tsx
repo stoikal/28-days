@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Canvas from '@/components/Canvas'
 
 export default function Day2 () {

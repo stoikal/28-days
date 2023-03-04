@@ -55,7 +55,7 @@ export default function Canvas ({ tick }: Props) {
         .map(([angle, distance]) => [angle, distance - 0.01])
         .filter(([angle, distance]) => {
           if (canvasRef.current === null) return false
-          
+
           const canvas = canvasRef.current as HTMLCanvasElement
           const cx = canvas.width / 2
           const cy = canvas.height / 2
