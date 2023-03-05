@@ -10,7 +10,8 @@ const content = [
   { title: 'Day 1 - Responsive Canvas', subtitle: 'Canvas API' },
   { title: 'Day 2 - spacehip pew pew', subtitle: 'Canvas API' },
   { title: 'Day 3 - Overly Attached Page', subtitle: 'Page Visibility API' },
-  { title: 'Day 4 - v i b r a t e', subtitle: 'Vibration API' }
+  { title: 'Day 4 - v i b r a t e', subtitle: 'Vibration API' },
+  { title: 'Day 5 - Synth', subtitle: 'Web Audio API' }
 ]
 
 export default function Home () {
