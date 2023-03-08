@@ -12,7 +12,9 @@ const content = [
   { title: 'Day 3 - Overly Attached Page', subtitle: 'Page Visibility API' },
   { title: 'Day 4 - v i b r a t e', subtitle: 'Vibration API' },
   { title: 'Day 5 - Synth', subtitle: 'Web Audio API' },
-  { title: 'Day 6 - Fullscreen Mangosteen', subtitle: 'Fullscreen API' }
+  { title: 'Day 6 - Fullscreen Mangosteen', subtitle: 'Fullscreen API' },
+  { title: 'Day 7 - WheelEvent', subtitle: 'WheelEvent' },
+  { title: 'Day 8 - BroadcastChannel', subtitle: 'BroadcastChannel API' }
 ]
 
 export default function Home () {
