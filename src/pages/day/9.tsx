@@ -30,7 +30,7 @@ export default function Day9 () {
             setIsCharging(battery.charging)
           })
 
-          setLevel(battery.level)
+          setLevel(battery.level * 100)
           setIsCharging(battery.charging)
         })
     }
