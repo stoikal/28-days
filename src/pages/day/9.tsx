@@ -12,7 +12,7 @@ type ExtNavigator = {
 }
 
 export default function Day9 () {
-  const [level, setLevel] = useState(80)
+  const [level, setLevel] = useState(0)
   const [isCharging, setIsCharging] = useState(false)
   const [isPercentageShown, setIsPercentageShown] = useState(false)
 
@@ -23,7 +23,7 @@ export default function Day9 () {
       n.getBattery()
         .then((battery: any) => {
           battery.addEventListener('levelchange', () => {
-            setLevel(battery.level)
+            setLevel(battery.level * 100)
           })
 
           battery.addEventListener('chargingchange', () => {
