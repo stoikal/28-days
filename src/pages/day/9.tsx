@@ -15,6 +15,7 @@ export default function Day9 () {
   const [level, setLevel] = useState(0)
   const [isCharging, setIsCharging] = useState(false)
   const [isPercentageShown, setIsPercentageShown] = useState(false)
+  const [isSupported, setIsSupported] = useState(true)
 
   useEffect(() => {
     const n = navigator as unknown as ExtNavigator
@@ -33,13 +34,15 @@ export default function Day9 () {
           setLevel(battery.level * 100)
           setIsCharging(battery.charging)
         })
+    } else {
+      setIsSupported(false)
     }
   }, [])
 
   return (
     <>
       <Head>
-        <title>Day 9</title>
+        <title>Day 9 - Battery</title>
       </Head>
       <main className="h-full flex justify-center items-center">
         <div className="w-full max-w-xl aspect-square relative">
@@ -76,6 +79,13 @@ export default function Day9 () {
             }
           </div>
         </div>
+        {
+          !isSupported && (
+            <div className="absolute bg-yellow-300 w-full text-center p-2">
+              Battery API is not supported by your browser
+            </div>
+          )
+        }
       </main>
       <style jsx>{`
         .battery-head {
