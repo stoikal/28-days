@@ -16,7 +16,8 @@ const content = [
   { title: 'Day 7 - WheelEvent', subtitle: 'WheelEvent' },
   { title: 'Day 8 - BroadcastChannel', subtitle: 'BroadcastChannel API' },
   { title: 'Day 9 - Battery', subtitle: 'Battery API' },
-  { title: 'Day 10 - Pengenalan Suara', subtitle: 'Web Speech API' }
+  { title: 'Day 10 - Pengenalan Suara', subtitle: 'Web Speech API' },
+  { title: 'Day 11 - Simple Puzzle', subtitle: 'Drag and Drop API' }
 ]
 
 export default function Home () {
