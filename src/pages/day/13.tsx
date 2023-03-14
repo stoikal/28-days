@@ -36,7 +36,7 @@ export default function Day13 () {
         {isSupported && position
           ? (
               <a
-                className="block border w-fit p-5 hover:bg-gray-200"
+                className="block border w-fit p-5 hover:shadow-lg hover:-translate-y-px"
                 href={`https://www.openstreetmap.org/#map=15/${position.lat}/${position.lng}`}
                 target="_blank"
               >
