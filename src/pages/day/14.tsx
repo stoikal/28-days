@@ -21,6 +21,10 @@ export default function Day14 () {
     })
 
     resizeObserver.observe(textarea)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
   }, [])
 
   return (

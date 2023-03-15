@@ -20,7 +20,8 @@ export default function Day13 () {
           lng: coords.longitude
         })
       })
-    } catch {
+    } catch (err) {
+      console.log('Error', err)
       setIsSupported(false)
     }
   }, [])
