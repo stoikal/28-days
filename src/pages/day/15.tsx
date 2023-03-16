@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 export default function Day15 () {
   const [selection, setSelection] = useState('')

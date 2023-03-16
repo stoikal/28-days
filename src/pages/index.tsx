@@ -21,7 +21,8 @@ const content = [
   { title: 'Notification', subtitle: 'Notifications API' },
   { title: 'location', subtitle: 'Geolocation API' },
   { title: 'ResizeObserver', subtitle: 'ResizeObserver API' },
-  { title: 'selection', subtitle: 'Selection API' }
+  { title: 'selection', subtitle: 'Selection API' },
+  { title: 'GET IP', subtitle: 'Fetch API' }
 ]
 
 export default function Home () {
