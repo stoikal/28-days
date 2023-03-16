@@ -7,21 +7,21 @@ import NextLink from 'next/link'
 // const inter = Inter({ subsets: ['latin'] })
 
 const content = [
-  { title: 'Day 1 - Responsive Canvas', subtitle: 'Canvas API' },
-  { title: 'Day 2 - spacehip pew pew', subtitle: 'Canvas API' },
-  { title: 'Day 3 - Overly Attached Page', subtitle: 'Page Visibility API' },
-  { title: 'Day 4 - v i b r a t e', subtitle: 'Vibration API' },
-  { title: 'Day 5 - Synth', subtitle: 'Web Audio API' },
-  { title: 'Day 6 - Fullscreen Mangosteen', subtitle: 'Fullscreen API' },
-  { title: 'Day 7 - WheelEvent', subtitle: 'WheelEvent' },
-  { title: 'Day 8 - BroadcastChannel', subtitle: 'BroadcastChannel API' },
-  { title: 'Day 9 - Battery', subtitle: 'Battery API' },
-  { title: 'Day 10 - Pengenalan Suara', subtitle: 'Web Speech API' },
-  { title: 'Day 11 - Simple Puzzle', subtitle: 'Drag and Drop API' },
-  { title: 'Day 12 - Notification', subtitle: 'Notifications API' },
-  { title: 'Day 13 - location', subtitle: 'Geolocation API' },
-  { title: 'Day 14 - ResizeObserver', subtitle: 'ResizeObserver API' },
-  { title: 'Day 15 - selection', subtitle: 'Selection API' }
+  { title: 'Responsive Canvas', subtitle: 'Canvas API' },
+  { title: 'spacehip pew pew', subtitle: 'Canvas API' },
+  { title: 'Overly Attached Page', subtitle: 'Page Visibility API' },
+  { title: 'v i b r a t e', subtitle: 'Vibration API' },
+  { title: 'Synth', subtitle: 'Web Audio API' },
+  { title: 'Fullscreen Mangosteen', subtitle: 'Fullscreen API' },
+  { title: 'WheelEvent', subtitle: 'WheelEvent' },
+  { title: 'BroadcastChannel', subtitle: 'BroadcastChannel API' },
+  { title: 'Battery', subtitle: 'Battery API' },
+  { title: 'Pengenalan Suara', subtitle: 'Web Speech API' },
+  { title: 'Simple Puzzle', subtitle: 'Drag and Drop API' },
+  { title: 'Notification', subtitle: 'Notifications API' },
+  { title: 'location', subtitle: 'Geolocation API' },
+  { title: 'ResizeObserver', subtitle: 'ResizeObserver API' },
+  { title: 'selection', subtitle: 'Selection API' }
 ]
 
 export default function Home () {
@@ -38,9 +38,9 @@ export default function Home () {
           className="max-w-4xl mx-auto"
         >
           <h1 className="text-2xl mb-3">
-            <a href="https://developer.mozilla.org/en-US/docs/Web/API">Learn Web APIs</a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API">28 Days of  Web APIs</a>
           </h1>
-          <div className="border p-4">
+          <div className="border border-gray-400 p-4">
             <h2 className="text-xl mb-2">Contents:</h2>
             <ul className="bg-white">
               {
@@ -50,8 +50,9 @@ export default function Home () {
                     className="mb-1 hover:underline decoration-dotted"
                   >
                     <NextLink href={`/day/${index + 1}`}>
-                      {item.title}
-                      <span className="text-gray-300">&nbsp;&nbsp;({item.subtitle})</span>
+                      <span>{index + 1}. </span>
+                      <span>{item.title}</span>
+                      <span className="text-gray-400">&nbsp;&nbsp;({item.subtitle})</span>
                     </NextLink>
                   </li>
                 ))
