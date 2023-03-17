@@ -51,10 +51,17 @@ export default function Home () {
                     key={index}
                     className="mb-1 hover:underline decoration-dotted"
                   >
-                    <NextLink href={`/day/${index + 1}`}>
-                      <span>{index + 1}. </span>
-                      <span>{item.title}</span>
-                      <span className="text-gray-400">&nbsp;&nbsp;({item.subtitle})</span>
+                    <NextLink
+                      href={`/day/${index + 1}`}
+                      className="flex"
+                    >
+                      <div>
+                        <span>{index + 1}.&nbsp;</span>
+                      </div>
+                      <div className="flex flex-wrap">
+                        <span className="break-keep">{item.title}&nbsp;</span>
+                        <span className="break-keep text-gray-400">({item.subtitle})</span>
+                      </div>
                     </NextLink>
                   </li>
                 ))
