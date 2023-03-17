@@ -23,7 +23,19 @@ const content = [
   { title: 'ResizeObserver', subtitle: 'ResizeObserver API' },
   { title: 'selection', subtitle: 'Selection API' },
   { title: 'GET IP', subtitle: 'Fetch API' },
-  { title: 'Endless Colors', subtitle: 'Intersection Observer API' }
+  { title: 'Endless Colors', subtitle: 'Intersection Observer API' },
+  { title: 'This Way Up', subtitle: 'Device Orientation Events' }
+
+  // { title: '-', subtitle: 'IndexedDB' },
+  // { title: 'Color Collection', subtitle: 'Fetch API' },
+  // { title: '-', subtitle: 'Clipboard API' },
+  // { title: '-', subtitle: '' },
+  // { title: '-', subtitle: '' },
+  // { title: '-', subtitle: '' },
+  // { title: 'Saron', subtitle: 'Web Audio API' },
+  // { title: 'Game of Life', subtitle: 'Canvas API' },
+  // { title: '-', subtitle: '' },
+  // { title: '-', subtitle: '' }
 ]
 
 export default function Home () {
