@@ -245,7 +245,7 @@ export default function Day11 () {
                   className="bg-gray-300 hover:bg-gray-00 px-2 rounded"
                   onClick={reset}
                 >
-                  reset
+                  next
                 </button>
               </span>
             )
