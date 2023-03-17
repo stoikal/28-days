@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 
 type Color = {
@@ -77,7 +77,7 @@ export default function Day17 () {
     }
   }
 
-  const loadColor = useCallback(() => {
+  const loadColor = () => {
     setIsLoading(true)
     setColors((prev) => {
       const hue = getRandomInt(360)
@@ -94,7 +94,11 @@ export default function Day17 () {
     setTimeout(() => {
       setIsLoading(false)
     }, 10)
-  }, [])
+  }
+
+  const toHslString = (color: Color) => {
+    return `hsl(${color.hue}, ${color.saturation}%, ${color.lightness}%)`
+  }
 
   const getTextColor = (color: Color) => {
     const hue = (color.hue + 360 / 2) % 360
@@ -110,19 +114,19 @@ export default function Day17 () {
         <title>Day 17 - Endless Colors</title>
       </Head>
       <main className="bg-black min-h-full">
-        <div className='max-w-2xl mx-auto'>
+        <div>
           <div>
             {colors.map((color, index) => (
               <div
                 key={index}
                 className="px-4 py-6 mb-0"
-                style={{ backgroundColor: `hsl(${color.hue}, ${color.saturation}%, ${color.lightness}%)` }}
+                style={{ backgroundColor: toHslString(color) }}
               >
                 <span
                   className="font-regular"
                   style={{ color: getTextColor(color) }}
                 >
-                  { `hsl(${color.hue}, ${color.saturation}%, ${color.lightness}%)` }
+                  { toHslString(color) }
                 </span>
               </div>
             ))}
