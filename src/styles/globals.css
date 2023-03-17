@@ -35,6 +35,15 @@ div#__next {
 }
 /* #endregion CSS RESET */
 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Fira Mono, ui-monospace, monospace;
+  }
+}
