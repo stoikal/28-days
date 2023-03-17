@@ -11,7 +11,7 @@ export default function Day16 () {
       setIsLoading(true)
       const res = await fetch('https://ipapi.co/json/')
       const data = await res.json()
-      console.log('===~res~===', res)
+
       setIp(data)
     } catch (err) {
       console.error(err)

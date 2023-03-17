@@ -22,7 +22,8 @@ const content = [
   { title: 'location', subtitle: 'Geolocation API' },
   { title: 'ResizeObserver', subtitle: 'ResizeObserver API' },
   { title: 'selection', subtitle: 'Selection API' },
-  { title: 'GET IP', subtitle: 'Fetch API' }
+  { title: 'GET IP', subtitle: 'Fetch API' },
+  { title: 'Endless Colors', subtitle: 'Intersection Observer API' }
 ]
 
 export default function Home () {

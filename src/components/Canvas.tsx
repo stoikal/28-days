@@ -117,7 +117,7 @@ export default function Canvas ({ tick }: Props) {
     if (tick - lastEnemySpawn > 200 || lastEnemySpawn === 0) {
       setLastEnemySpawn(tick)
       enemies.push({
-        angle: Math.random() * (359 - 0) + 0,
+        angle: Math.random() * 359,
         radius: 5,
         hit: false,
         explode: false
