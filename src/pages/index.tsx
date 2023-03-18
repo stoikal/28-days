@@ -25,8 +25,8 @@ const content = [
   { title: 'GET IP', subtitle: 'Fetch API' },
   { title: 'Endless Colors', subtitle: 'Intersection Observer API' },
   { title: 'This Way Up', subtitle: 'Device Orientation Events' },
-  { title: 'Game of Life', subtitle: 'Canvas API' }
-  // { title: '-', subtitle: 'IndexedDB' },
+  { title: 'Game of Life', subtitle: 'Canvas API' },
+  { title: 'video', subtitle: 'Picture-in-Picture ' }
   // { title: 'Color Collection', subtitle: 'Fetch API' },
   // { title: '-', subtitle: 'Clipboard API' },
   // { title: '-', subtitle: '' },

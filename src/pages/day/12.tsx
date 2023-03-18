@@ -10,12 +10,13 @@ export default function Day12 () {
       // eslint-disable-next-line no-new
       new Notification(title, { body })
     } else if (Notification.permission !== 'denied') {
-      Notification.requestPermission().then(function (permission) {
-        if (permission === 'granted') {
-          // eslint-disable-next-line no-new
-          new Notification('notificationMessage')
-        }
-      })
+      Notification.requestPermission()
+        .then((permission) => {
+          if (permission === 'granted') {
+            // eslint-disable-next-line no-new
+            new Notification(title, { body })
+          }
+        })
     }
   }
 
