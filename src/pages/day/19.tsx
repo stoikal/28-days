@@ -6,11 +6,6 @@ import { useEffect, useRef } from 'react'
 // 2. Any dead cell with three live neighbours becomes a live cell.
 // 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
-type Cell = {
-  x: number
-  y: number
-}
-
 type Coordinate = [x: number, y: number]
 
 type Boundary = {
@@ -23,6 +18,8 @@ type Boundary = {
     y: number
   }
 }
+
+type State = Record<string, boolean>
 
 // const CELL_SIZE = 16
 const INITIAL_DENSITY = 0.2
@@ -45,81 +42,72 @@ const getNeighboringCoordinates = (coord: Coordinate) => {
   return coordinates
 }
 
-const getLiveCells = (coords: Coordinate[], state: Cell[]) => {
-  const cells: Cell[] = []
+const getLiveCells = (coords: Coordinate[], state: State) => {
+  let count = 0
 
   coords.forEach((coord) => {
-    const liveCell = state.find((cell) => (
-      cell.x === coord[0] &&
-      cell.y === coord[1]
-    ))
+    const liveCell = state[String(coord)]
 
     if (liveCell) {
-      cells.push(liveCell)
+      count++
     }
   })
 
-  return cells
-}
-
-const isOccupied = (coord: Coordinate, state: Cell[]) => {
-  return state.some((cell) => (
-    cell.x === coord[0] &&
-    cell.y === coord[1]
-  ))
+  return count
 }
 
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-const getRandomCells = (count: number, boundary: Boundary) => {
-  const cells: Cell[] = []
-  const isDuplicate = (c: Cell) => cells.some((cell) => cell.x === c.x && cell.y === c.y)
+const getInitialState = (count: number, boundary: Boundary) => {
+  const state: State = {}
 
   for (let i = 0; i < count; i++) {
-    let newCell: Cell | null = null
+    let coord: Coordinate | null = null
 
-    while (newCell === null || isDuplicate(newCell)) {
-      newCell = {
-        x: getRandomInt(boundary.min.x, boundary.max.x),
-        y: getRandomInt(boundary.min.y, boundary.max.y)
-      }
+    while (coord === null || state[String(coord)]) {
+      coord = [
+        getRandomInt(boundary.min.x, boundary.max.x),
+        getRandomInt(boundary.min.y, boundary.max.y)
+      ]
     }
 
-    if (newCell) {
-      cells.push(newCell)
-    }
+    state[String(coord)] = true
   }
 
-  return cells
+  return state
 }
 
-const getNextState = (state: Cell[]) => {
-  const nextState: Cell[] = []
+const stringToCoord = (str: string) => {
+  const arr = str.split(',')
+
+  return [Number(arr[0]), Number(arr[1])] as Coordinate
+}
+
+const getNextState = (state: State) => {
+  const nextState: State = {}
   const checked: Record<string, boolean> = {}
 
-  state.forEach((cell) => {
-    const neighboringCoords = getNeighboringCoordinates([cell.x, cell.y])
-    const liveNeighbors: Cell[] = getLiveCells(neighboringCoords, state)
+  Object.entries(state).forEach(([key, isAlive]) => {
+    const coord = stringToCoord(key)
+    const neighboringCoords = getNeighboringCoordinates(coord)
+    const neighbourCount = getLiveCells(neighboringCoords, state)
 
-    if (liveNeighbors.length === 2 || liveNeighbors.length === 3) {
-      nextState.push(cell)
+    if (neighbourCount === 2 || neighbourCount === 3) {
+      nextState[key] = true
     }
 
     for (const coord of neighboringCoords) {
       // skip because it is already checked
       if (checked[String(coord)]) continue
-      if (isOccupied(coord, state)) continue
+      if (state[String(coord)]) continue
 
       const neighborNeighboringCoords = getNeighboringCoordinates(coord)
-      const live = getLiveCells(neighborNeighboringCoords, state)
+      const count = getLiveCells(neighborNeighboringCoords, state)
 
-      if (live.length === 3) {
-        nextState.push({
-          x: coord[0],
-          y: coord[1]
-        })
+      if (count === 3) {
+        nextState[String(coord)] = true
       }
 
       checked[String(coord)] = true
@@ -155,7 +143,7 @@ export default function Day19 () {
     const yCellCount = Math.floor(canvas.height / cellSize)
     const initialCellCount = Math.round(INITIAL_DENSITY * xCellCount * yCellCount)
 
-    let state: Cell[] = getRandomCells(initialCellCount, {
+    let state = getInitialState(initialCellCount, {
       min: { x: 0, y: 0 },
       max: {
         x: xCellCount,
@@ -184,16 +172,20 @@ export default function Day19 () {
     }
   }, [])
 
-  const draw = (ctx: CanvasRenderingContext2D, state: Cell[], cellSize: number) => {
-    state.forEach((cell) => {
-      ctx.beginPath()
-      ctx.rect(
-        cell.x * cellSize,
-        cell.y * cellSize,
-        cellSize,
-        cellSize
-      )
-      ctx.stroke()
+  const draw = (ctx: CanvasRenderingContext2D, state: State, cellSize: number) => {
+    Object.entries(state).forEach(([key, isAlive]) => {
+      if (isAlive) {
+        const [x, y] = stringToCoord(key)
+
+        ctx.beginPath()
+        ctx.rect(
+          x * cellSize,
+          y * cellSize,
+          cellSize,
+          cellSize
+        )
+        ctx.stroke()
+      }
     })
   }
 
