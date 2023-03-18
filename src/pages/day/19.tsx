@@ -24,7 +24,7 @@ type Boundary = {
   }
 }
 
-const CELL_SIZE = 16
+// const CELL_SIZE = 16
 const INITIAL_DENSITY = 0.2
 
 const getNeighboringCoordinates = (coord: Coordinate) => {
@@ -69,40 +69,6 @@ const isOccupied = (coord: Coordinate, state: Cell[]) => {
   ))
 }
 
-const getNextState = (state: Cell[]) => {
-  const nextState: Cell[] = []
-  const checked: Record<string, boolean> = {}
-
-  state.forEach((cell) => {
-    const neighboringCoords = getNeighboringCoordinates([cell.x, cell.y])
-    const liveNeighbors: Cell[] = getLiveCells(neighboringCoords, state)
-
-    if (liveNeighbors.length === 2 || liveNeighbors.length === 3) {
-      nextState.push(cell)
-    }
-
-    for (const coord of neighboringCoords) {
-      // skip because it is already checked
-      if (isOccupied(coord, state)) continue
-      if (checked[String(coord)]) continue
-
-      const neighborNeighboringCoords = getNeighboringCoordinates(coord)
-      const live = getLiveCells(neighborNeighboringCoords, state)
-
-      if (live.length === 3) {
-        nextState.push({
-          x: coord[0],
-          y: coord[1]
-        })
-      }
-
-      checked[String(coord)] = true
-    }
-  })
-
-  return nextState
-}
-
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
@@ -129,6 +95,40 @@ const getRandomCells = (count: number, boundary: Boundary) => {
   return cells
 }
 
+const getNextState = (state: Cell[]) => {
+  const nextState: Cell[] = []
+  const checked: Record<string, boolean> = {}
+
+  state.forEach((cell) => {
+    const neighboringCoords = getNeighboringCoordinates([cell.x, cell.y])
+    const liveNeighbors: Cell[] = getLiveCells(neighboringCoords, state)
+
+    if (liveNeighbors.length === 2 || liveNeighbors.length === 3) {
+      nextState.push(cell)
+    }
+
+    for (const coord of neighboringCoords) {
+      // skip because it is already checked
+      if (checked[String(coord)]) continue
+      if (isOccupied(coord, state)) continue
+
+      const neighborNeighboringCoords = getNeighboringCoordinates(coord)
+      const live = getLiveCells(neighborNeighboringCoords, state)
+
+      if (live.length === 3) {
+        nextState.push({
+          x: coord[0],
+          y: coord[1]
+        })
+      }
+
+      checked[String(coord)] = true
+    }
+  })
+
+  return nextState
+}
+
 export default function Day19 () {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -148,8 +148,11 @@ export default function Day19 () {
     canvas.width = container.clientWidth
     canvas.height = container.clientHeight
 
-    const xCellCount = Math.floor(canvas.width / CELL_SIZE)
-    const yCellCount = Math.floor(canvas.height / CELL_SIZE)
+    const shorterSide = Math.min(canvas.width, canvas.height)
+    const cellSize = Math.floor(shorterSide / 60)
+
+    const xCellCount = Math.floor(canvas.width / cellSize)
+    const yCellCount = Math.floor(canvas.height / cellSize)
     const initialCellCount = Math.round(INITIAL_DENSITY * xCellCount * yCellCount)
 
     let state: Cell[] = getRandomCells(initialCellCount, {
@@ -162,32 +165,35 @@ export default function Day19 () {
 
     let id: any
 
-    const loop = () => {
-      id = setTimeout(loop, 100)
+    const animate = () => {
+      id = requestAnimationFrame(animate)
 
       canvas.width = container.clientWidth // clear canvas
 
-      draw(ctx, state)
+      draw(ctx, state, cellSize)
       state = getNextState(state)
     }
 
-    loop()
+    if (!id) {
+      animate()
+    }
 
     return () => {
       clearTimeout(id)
+      cancelAnimationFrame(id)
     }
   }, [])
 
-  const draw = (ctx: CanvasRenderingContext2D, state: Cell[]) => {
+  const draw = (ctx: CanvasRenderingContext2D, state: Cell[], cellSize: number) => {
     state.forEach((cell) => {
       ctx.beginPath()
       ctx.rect(
-        cell.x * CELL_SIZE,
-        cell.y * CELL_SIZE,
-        CELL_SIZE,
-        CELL_SIZE
+        cell.x * cellSize,
+        cell.y * cellSize,
+        cellSize,
+        cellSize
       )
-      ctx.fill()
+      ctx.stroke()
     })
   }
 
