@@ -19,11 +19,11 @@ type Boundary = {
   }
 }
 
-type State = Record<string, boolean>
+type State = Record<string, number>
 
 const CELL_SIZE = 12
 const INITIAL_DENSITY = 0.5
-const FPS = 24
+const FPS = 12
 
 const getNeighboringCoordinates = (coord: Coordinate) => {
   const coordinates: Coordinate[] = []
@@ -74,7 +74,7 @@ const getInitialState = (count: number, boundary: Boundary) => {
       ]
     }
 
-    state[String(coord)] = true
+    state[String(coord)] = 1
   }
 
   return state
@@ -90,25 +90,25 @@ const getNextState = (state: State) => {
   const nextState: State = {}
   const checked: Record<string, boolean> = {}
 
-  Object.entries(state).forEach(([key, isAlive]) => {
+  Object.entries(state).forEach(([key, age]) => {
     const coord = stringToCoord(key)
     const neighboringCoords = getNeighboringCoordinates(coord)
     const neighbourCount = getLiveCells(neighboringCoords, state)
 
     if (neighbourCount === 2 || neighbourCount === 3) {
-      nextState[key] = true
+      nextState[key] = age + 1
     }
 
     for (const coord of neighboringCoords) {
       // skip because it is already checked
+      if (state[String(coord)] > 0) continue
       if (checked[String(coord)]) continue
-      if (state[String(coord)]) continue
 
       const neighborNeighboringCoords = getNeighboringCoordinates(coord)
       const count = getLiveCells(neighborNeighboringCoords, state)
 
       if (count === 3) {
-        nextState[String(coord)] = true
+        nextState[String(coord)] = 1
       }
 
       checked[String(coord)] = true
@@ -174,19 +174,18 @@ export default function Day19 () {
   }, [])
 
   const draw = (ctx: CanvasRenderingContext2D, state: State, cellSize: number) => {
-    Object.entries(state).forEach(([key, isAlive]) => {
-      if (isAlive) {
-        const [x, y] = stringToCoord(key)
+    Object.entries(state).forEach(([key, age]) => {
+      const [x, y] = stringToCoord(key)
 
-        ctx.beginPath()
-        ctx.rect(
-          x * cellSize,
-          y * cellSize,
-          cellSize,
-          cellSize
-        )
-        ctx.fill()
-      }
+      ctx.beginPath()
+      ctx.rect(
+        x * cellSize,
+        y * cellSize,
+        cellSize,
+        cellSize
+      )
+
+      ctx.stroke()
     })
   }
 
