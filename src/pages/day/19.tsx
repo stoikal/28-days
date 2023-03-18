@@ -21,8 +21,9 @@ type Boundary = {
 
 type State = Record<string, boolean>
 
-// const CELL_SIZE = 16
-const INITIAL_DENSITY = 0.2
+const CELL_SIZE = 12
+const INITIAL_DENSITY = 0.5
+const FPS = 24
 
 const getNeighboringCoordinates = (coord: Coordinate) => {
   const coordinates: Coordinate[] = []
@@ -136,11 +137,8 @@ export default function Day19 () {
     canvas.width = container.clientWidth
     canvas.height = container.clientHeight
 
-    const shorterSide = Math.min(canvas.width, canvas.height)
-    const cellSize = Math.floor(shorterSide / 60)
-
-    const xCellCount = Math.floor(canvas.width / cellSize)
-    const yCellCount = Math.floor(canvas.height / cellSize)
+    const xCellCount = Math.floor(canvas.width / CELL_SIZE)
+    const yCellCount = Math.floor(canvas.height / CELL_SIZE)
     const initialCellCount = Math.round(INITIAL_DENSITY * xCellCount * yCellCount)
 
     let state = getInitialState(initialCellCount, {
@@ -151,24 +149,27 @@ export default function Day19 () {
       }
     })
 
-    let id: any
+    let animationFrameId: any
+    let timeOutId: any
 
     const animate = () => {
-      id = requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(() => {
+        timeOutId = setTimeout(() => {
+          animate()
+        }, Math.round(1000 / FPS))
+      })
 
       canvas.width = container.clientWidth // clear canvas
 
-      draw(ctx, state, cellSize)
+      draw(ctx, state, CELL_SIZE)
       state = getNextState(state)
     }
 
-    if (!id) {
-      animate()
-    }
+    animate()
 
     return () => {
-      clearTimeout(id)
-      cancelAnimationFrame(id)
+      cancelAnimationFrame(animationFrameId)
+      clearTimeout(timeOutId)
     }
   }, [])
 
@@ -184,7 +185,7 @@ export default function Day19 () {
           cellSize,
           cellSize
         )
-        ctx.stroke()
+        ctx.fill()
       }
     })
   }
