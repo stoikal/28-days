@@ -1,6 +1,11 @@
 import Head from 'next/head'
 import rawEmojiList from '@/data/emoji.json'
 import { useMemo, useState, useRef, ChangeEvent } from 'react'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+
+type MyPageProps = {
+  initialSearch: string
+}
 
 type Emoji = {
   no: string
@@ -15,8 +20,8 @@ type Emoji = {
 type Subcategory = Record<string, Emoji[]>
 type Category = Record<string, Subcategory>
 
-export default function Day21 () {
-  const [search, setSearch] = useState('')
+export default function Day21 ({ initialSearch }: MyPageProps) {
+  const [search, setSearch] = useState(initialSearch)
   const [emojiCopied, setEmojiCopied] = useState<string | null>(null)
 
   const snackbarRef = useRef<HTMLDivElement | null>(null)
@@ -28,8 +33,8 @@ export default function Day21 () {
     return rawEmojiList.filter((emoji) => {
       const searchValue = search.toLowerCase()
       return (
-        emoji.cldrShortName.includes(searchValue) ||
-        emoji.keywords.some((keyword) => keyword.includes(searchValue))
+        emoji.cldrShortName.toLowerCase().includes(searchValue) ||
+        emoji.keywords.some((keyword) => keyword.toLowerCase().includes(searchValue))
       )
     })
   }, [search])
@@ -144,4 +149,14 @@ export default function Day21 () {
       </main>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps<MyPageProps> = async (context: GetServerSidePropsContext) => {
+  const { query: { q } } = context
+
+  return {
+    props: {
+      initialSearch: String(q || '')
+    }
+  }
 }
