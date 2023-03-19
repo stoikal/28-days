@@ -25,7 +25,7 @@ export default function Day20 () {
   return (
     <>
       <Head>
-        <title>Day 20</title>
+        <title>Day 20 - Picture in Picture</title>
       </Head>
       <main className="relative min-h-full bg-black">
         <video
