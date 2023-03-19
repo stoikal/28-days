@@ -84,17 +84,17 @@ export default function Day21 ({ initialSearch }: MyPageProps) {
       </Head>
       <main className="relative">
         <div className="w-full sticky top-0 bg-white drop-shadow-sm">
-          <div className='max-w-4xl mx-auto p-4'>
+          <div className='max-w-6xl mx-auto p-4 relative'>
             <input
               value={search}
-              placeholder="search"
+              placeholder="Search"
               type="text"
-              className="w-full sm:w-2/3 md:w-1/2 max-w-full border px-3 py-2"
+              className="w-full sm:w-2/3 md:w-1/2 lg:w-2/5 max-w-full border px-3 py-2"
               onChange={handleSearchChange}
             />
           </div>
         </div>
-        <div className="max-w-4xl mx-auto p-4">
+        <div className="max-w-6xl mx-auto p-4">
           <div>
             {
               Object.entries(byCategoryEmojiList).map(([category, subcategories]) => (
@@ -113,9 +113,9 @@ export default function Day21 ({ initialSearch }: MyPageProps) {
                               items.map((emoji) => (
                                 <div
                                   key={emoji.no}
-                                  className="w-1/2 sm:w-1/3 md:w-1/4 px-2 pt-6 pb-3 border"
+                                  className="w-1/2 min-h-36 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 pt-6 pb-3 border"
                                 >
-                                  <div className="text-6xl text-center">
+                                  <div className="text-6xl text-center pb-2">
                                     <span
                                       role="button"
                                       className="inline-block hover:-translate-y-1 select-none"
