@@ -27,8 +27,8 @@ const content = [
   { day: 18, title: 'This Way Up', subtitle: 'Device Orientation Events' },
   { day: 19, title: 'Game of Life', subtitle: 'Canvas API' },
   { day: 20, title: 'video', subtitle: 'Picture-in-Picture' },
-  { day: 21, title: 'Emoji', subtitle: 'Clipboard API' }
-  // { day: 22, title: 'Eyes', subtitle: 'Gamepad API' },
+  { day: 21, title: 'Emoji', subtitle: 'Clipboard API' },
+  { day: 22, title: 'Eyes', subtitle: 'Gamepad API' }
   // { day: 23, title: 'Color Collection', subtitle: 'IndexedDB' },
   // { day: 24, title: 'Color Collection', subtitle: 'Fetch API' },
   // { day: 25, title: '-', subtitle: '' },
