@@ -44,7 +44,7 @@ export default function Day20 () {
           onClick={requestPiP}
         >
           <span>
-            { isSupported ? 'toggle picture in picture' : 'PiP is not supported' }
+            { isSupported ? 'toggle picture in picture' : 'picture in picture is not supported' }
           </span>
         </button>
       </main>

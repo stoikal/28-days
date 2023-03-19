@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import rawEmojiList from '@/data/emoji.json'
-import { useMemo, useState, ChangeEvent } from 'react'
+import { useMemo, useState, useRef, ChangeEvent } from 'react'
 
 type Emoji = {
   no: string
@@ -17,6 +17,10 @@ type Category = Record<string, Subcategory>
 
 export default function Day21 () {
   const [search, setSearch] = useState('')
+  const [emojiCopied, setEmojiCopied] = useState<string | null>(null)
+
+  const snackbarRef = useRef<HTMLDivElement | null>(null)
+  const timeoutIdRef = useRef<any>(null)
 
   const filteredEmojiList = useMemo(() => {
     if (!search) return rawEmojiList
@@ -51,14 +55,31 @@ export default function Day21 () {
     setSearch(value)
   }
 
+  const createClickHandler = (emoji: string) => () => {
+    navigator.clipboard.writeText(emoji)
+    setEmojiCopied(emoji)
+    showSnackbar()
+  }
+
+  const showSnackbar = () => {
+    clearTimeout(timeoutIdRef.current)
+    const snackbar = snackbarRef.current
+
+    snackbar?.classList.remove('hidden')
+
+    timeoutIdRef.current = setTimeout(() => {
+      snackbar?.classList.add('hidden')
+    }, 4000)
+  }
+
   return (
     <>
       <Head>
         <title>Day 21 - Emoji</title>
       </Head>
-      <main>
+      <main className="relative">
         <div className="max-w-4xl mx-auto p-4">
-          <div className="pb-6">
+          <div className="pb-4">
             <input
               value={search}
               placeholder="search"
@@ -85,13 +106,21 @@ export default function Day21 () {
                               items.map((emoji) => (
                                 <div
                                   key={emoji.no}
-                                  className="w-1/2 sm:w-1/3 md:w-1/4 p-3 border"
+                                  className="w-1/2 sm:w-1/3 md:w-1/4 px-2 pt-6 pb-3 border"
                                 >
                                   <div className="text-6xl text-center">
-                                    {emoji.emoji}
+                                    <span
+                                      role="button"
+                                      className="inline-block hover:-translate-y-1 select-none"
+                                      onClick={createClickHandler(emoji.emoji)}
+                                    >
+                                      {emoji.emoji}
+                                    </span>
                                   </div>
                                   <div className="text-center">
-                                    {emoji.cldrShortName}
+                                    <span className="leading-none">
+                                      {emoji.cldrShortName}
+                                    </span>
                                   </div>
                                 </div>
                               ))
@@ -105,6 +134,12 @@ export default function Day21 () {
               ))
             }
           </div>
+        </div>
+        <div
+          ref={snackbarRef}
+          className="hidden fixed left-1/2 -translate-x-1/2 bottom-6 bg-black px-4 py-2 rounded text-white text-center"
+        >
+          {emojiCopied} copied to clipboard!
         </div>
       </main>
     </>
