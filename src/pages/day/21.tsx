@@ -83,8 +83,8 @@ export default function Day21 ({ initialSearch }: MyPageProps) {
         <title>Day 21 - Emoji</title>
       </Head>
       <main className="relative">
-        <div className="max-w-4xl mx-auto p-4">
-          <div className="pb-4">
+        <div className="w-full sticky top-0 bg-white drop-shadow-sm">
+          <div className='max-w-4xl mx-auto p-4'>
             <input
               value={search}
               placeholder="search"
@@ -93,6 +93,8 @@ export default function Day21 ({ initialSearch }: MyPageProps) {
               onChange={handleSearchChange}
             />
           </div>
+        </div>
+        <div className="max-w-4xl mx-auto p-4">
           <div>
             {
               Object.entries(byCategoryEmojiList).map(([category, subcategories]) => (
