@@ -58,11 +58,12 @@ export default function Day21 () {
       </Head>
       <main>
         <div className="max-w-4xl mx-auto p-4">
-          <div>
+          <div className="pb-6">
             <input
               value={search}
+              placeholder="search"
               type="text"
-              className="w-96q max-w-full border px-3 py-2"
+              className="w-full sm:w-2/3 md:w-1/2 max-w-full border px-3 py-2"
               onChange={handleSearchChange}
             />
           </div>
@@ -70,20 +71,23 @@ export default function Day21 () {
             {
               Object.entries(byCategoryEmojiList).map(([category, subcategories]) => (
                 <div key={category}>
-                  <h2 className="text-xl font-bold">{category}</h2>
+                  <h2 className="text-xl font-bold mb-1">{category}</h2>
                   <div>
                     {
                       Object.entries(subcategories).map(([subcategory, items]) => (
-                        <div key={category + subcategory}>
-                          <h3 className="text-lg font-bold">{subcategory}</h3>
+                        <div
+                          key={category + subcategory}
+                          className="mb-5"
+                        >
+                          <h3 className="text-lg font-bold mb-1">{subcategory}</h3>
                           <div className="flex flex-wrap">
                             {
                               items.map((emoji) => (
                                 <div
                                   key={emoji.no}
-                                  className="w-1/3 border"
+                                  className="w-1/2 sm:w-1/3 md:w-1/4 p-3 border"
                                 >
-                                  <div className="text-2xl text-center">
+                                  <div className="text-6xl text-center">
                                     {emoji.emoji}
                                   </div>
                                   <div className="text-center">
@@ -97,23 +101,6 @@ export default function Day21 () {
                       ))
                     }
                   </div>
-                  {/* <div className="flex flex-wrap">
-                    {items.map((emoji: Emoji) => (
-                      <div
-                        key={emoji.no}
-                        className="w-1/3"
-                      >
-                        <div className="text-center text-6xl">
-                          {emoji.emoji}
-                        </div>
-                        <div className="text-center">
-                          <span>
-                            {emoji.cldrShortName}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div> */}
                 </div>
               ))
             }
