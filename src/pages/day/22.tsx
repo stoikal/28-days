@@ -2,19 +2,17 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useGamepad } from '@/hooks/useGamepad'
 
-const EYE_HEIGHT = 150
+const EYE_HEIGHT = 300
 const IRIS_RADIUS = 80
 
 export default function Day22 () {
-  // [lx, ly, lt, rx, ry, rt]
+  // [lx, ly, rt, ry]
   const [lXIndex] = useState(0)
   const [lYIndex] = useState(1)
-  const [lTriggerIndex] = useState(2)
-  const [rXIndex] = useState(3)
-  const [rYIndex] = useState(4)
-  const [rTriggerIndex] = useState(5)
+  const [rXIndex] = useState(2)
+  const [rYIndex] = useState(3)
 
-  const { axes } = useGamepad()
+  const { axes, triggers } = useGamepad()
 
   const lX = (() => {
     if (axes[lXIndex] !== undefined) {
@@ -30,14 +28,6 @@ export default function Day22 () {
     }
 
     return 0
-  })()
-
-  const lTrigger = (() => {
-    if (axes[lTriggerIndex] !== undefined) {
-      return axes[lTriggerIndex]
-    }
-
-    return -1
   })()
 
   const rX = (() => {
@@ -56,12 +46,20 @@ export default function Day22 () {
     return 0
   })()
 
-  const rTrigger = (() => {
-    if (axes[rTriggerIndex] !== undefined) {
-      return axes[rTriggerIndex]
+  const lTrigger = (() => {
+    if (triggers[0] !== undefined) {
+      return triggers[0]
     }
 
-    return -1
+    return 0
+  })()
+
+  const rTrigger = (() => {
+    if (triggers[1] !== undefined) {
+      return triggers[1]
+    }
+
+    return 0
   })()
 
   return (
@@ -87,8 +85,8 @@ export default function Day22 () {
                 L 400 0
                 L 400 200
                 L 390 200
-                q -190 ${EYE_HEIGHT * lTrigger} -380 0
-                q 190 ${EYE_HEIGHT} 380 0
+                q -190 ${EYE_HEIGHT * lTrigger - EYE_HEIGHT / 2} -380 0
+                q 190 ${EYE_HEIGHT / 2} 380 0
                 L 400 200
                 L 400 400
                 L 0 400
@@ -114,8 +112,8 @@ export default function Day22 () {
                 L 400 0
                 L 400 200
                 L 390 200
-                q -190 ${EYE_HEIGHT * rTrigger} -380 0
-                q 190 ${EYE_HEIGHT} 380 0
+                q -190 ${EYE_HEIGHT * rTrigger - EYE_HEIGHT / 2} -380 0
+                q 190 ${EYE_HEIGHT / 2} 380 0
                 L 400 200
                 L 400 400
                 L 0 400
