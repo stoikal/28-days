@@ -45,9 +45,9 @@ export function useTouchAsTrigger () {
 
     function updateGamepadState () {
       if (isTouched) {
-        setAmount(prev => Math.min(1, prev + 0.2))
+        setAmount(prev => Math.min(1, prev + 0.1))
       } else {
-        setAmount(prev => Math.max(0, prev - 0.2))
+        setAmount(prev => Math.max(0, prev - 0.1))
       }
 
       id = requestAnimationFrame(updateGamepadState)

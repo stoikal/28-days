@@ -53,8 +53,8 @@ export default function Day22 () {
                 L 400 0
                 L 400 200
                 L 390 200
-                q -190 ${EYE_HEIGHT * lBlink - EYE_HEIGHT / 2} -380 0
-                q 190 ${EYE_HEIGHT / 2} 380 0
+                q -190 ${(EYE_HEIGHT * 5 / 6 * lBlink) - EYE_HEIGHT / 2} -380 0
+                q 190 ${EYE_HEIGHT / 2 - EYE_HEIGHT * lBlink / 6} 380 0
                 L 400 200
                 L 400 400
                 L 0 400
@@ -80,8 +80,8 @@ export default function Day22 () {
                 L 400 0
                 L 400 200
                 L 390 200
-                q -190 ${EYE_HEIGHT * rBlink - EYE_HEIGHT / 2} -380 0
-                q 190 ${EYE_HEIGHT / 2} 380 0
+                q -190 ${(EYE_HEIGHT * 5 / 6 * rBlink) - EYE_HEIGHT / 2} -380 0
+                q 190 ${EYE_HEIGHT / 2 - EYE_HEIGHT * rBlink / 6} 380 0
                 L 400 200
                 L 400 400
                 L 0 400
