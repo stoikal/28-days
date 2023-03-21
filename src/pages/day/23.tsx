@@ -1,4 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react'
+import Head from 'next/head'
 import * as Tone from 'tone'
 import TuningPanel from '@/components/Slendro/TuningPanel'
 
@@ -12,17 +13,17 @@ type Wilah = {
 type Tuning = Wilah[]
 
 const INITIAL_TUNING: Tuning = [
-  { name: '6', cent: -240 },
+  { name: '6', cent: -260 },
   { name: '1', cent: 0 },
-  { name: '2', cent: 240 },
-  { name: '3', cent: 480 },
+  { name: '2', cent: 260 },
+  { name: '3', cent: 500 },
   { name: '5', cent: 720 },
-  { name: '6', cent: 960 },
+  { name: '6', cent: 940 },
   { name: '1', cent: 1200 }
 ]
 
 export default function Day23 () {
-  const [barangFreq, setBarangFreq] = useState(275)
+  const [barangFreq, setBarangFreq] = useState(270)
   const [tuning, setTuning] = useState(INITIAL_TUNING)
 
   const synthRef = useRef<Tone.Synth<Tone.SynthOptions> | null>(null)
@@ -47,8 +48,9 @@ export default function Day23 () {
   }
 
   const handleBarangFreqChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!isNaN(Number(e.target.value))) {
-      setBarangFreq(Number(e.target.value))
+    const freq = Number(e.target.value)
+    if (!isNaN(freq)) {
+      setBarangFreq(freq)
     }
   }
 
@@ -58,15 +60,18 @@ export default function Day23 () {
 
   return (
     <>
-      <main className="h-full grid place-items-center bg-pink-400">
-        <div className="p-4 border">
+      <Head>
+        <title>Day 23 - Slendro</title>
+      </Head>
+      <main className="min-h-full bg-pink-400 flex flex-col items-center justify-center">
+        <div className="p-4 mb-10 border">
           {
             tuning
               .map((wilah, index) => (
                 <button
                   key={index}
                   onMouseDown={handleButtonClick(Math.round(barangFreq * Math.pow(2, wilah.cent / 1200)))}
-                  className="border mx-1 px-6 py-8"
+                  className="border mx-1 px-6 py-20"
                 >
                   <span>
                     {wilah.name}
@@ -77,20 +82,26 @@ export default function Day23 () {
               ))
           }
         </div>
+
         <div>
-          <input
-            value={barangFreq}
-            type="number"
-            onChange={handleBarangFreqChange}
+          <div>
+            <label><em>Barang</em> frequency</label>:
+            <br/>
+            <input
+              value={barangFreq}
+              type="number"
+              className="px-3 py-2 bg-transparent border mb-3"
+              onChange={handleBarangFreqChange}
+            />
+          </div>
+          Intervals:
+          <TuningPanel
+            tuning={tuning}
+            lowest={-240}
+            highest={1200}
+            onTuningChange={handleTuningChange}
           />
         </div>
-
-        <TuningPanel
-          tuning={tuning}
-          lowest={-240}
-          highest={1200}
-          onTuningChange={handleTuningChange}
-        />
       </main>
     </>
   )

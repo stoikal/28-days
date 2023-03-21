@@ -15,8 +15,9 @@ type Props = {
 }
 
 const GUIDE_STEP = 240 // cent
+// const HIGHLIGTED_GUIDE_STEP = 240 // cent
 const CENT_PER_PIXEL = 2 // amount
-const SNAP = 40 // cent
+const SNAP = 20 // cent
 
 export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Props) {
   const [tuningIndexInDrag, setTuningIndexInDrag] = useState<number | null>(null)
@@ -29,6 +30,8 @@ export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Prop
   const guideWidth = Math.abs(guideLowest - guideHighest) / CENT_PER_PIXEL
   const guideHeight = 100
   const guideStepWidth = Math.round(GUIDE_STEP / CENT_PER_PIXEL)
+
+  const guideLines = [...Array(Math.round(guideWidth / guideStepWidth))].map((_, index) => ({ x: index * guideStepWidth }))
 
   useEffect(() => {
     if (!wrapperRef.current) return
@@ -110,16 +113,16 @@ export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Prop
             stroke="white"
           />
           {
-            [...Array(Math.round(guideWidth / guideStepWidth))]
-              .map((_, index) => (
+            guideLines
+              .map((line, index) => (
                 <line
                   key={index}
-                  x1={index * guideStepWidth}
+                  x1={line.x}
                   y1="0"
-                  x2={index * guideStepWidth}
+                  x2={line.x}
                   y2={guideHeight}
                   stroke="white"
-                  strokeWidth="1"
+                  strokeWidth={1}
                 />
               ))
           }
@@ -129,6 +132,8 @@ export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Prop
             <div
               key={index}
               style={{
+                width: 12,
+                textAlign: 'center',
                 top: 0,
                 left: getLeftPosition(wilah.cent),
                 cursor: tuningIndexInDrag === null ? 'grab' : 'grabbing'
