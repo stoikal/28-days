@@ -13,17 +13,19 @@ type Wilah = {
 type Tuning = Wilah[]
 
 const INITIAL_TUNING: Tuning = [
+  { name: '5', cent: -460 },
   { name: '6', cent: -260 },
   { name: '1', cent: 0 },
-  { name: '2', cent: 260 },
-  { name: '3', cent: 500 },
-  { name: '5', cent: 720 },
+  { name: '2', cent: 220 },
+  { name: '3', cent: 480 },
+  { name: '5', cent: 740 },
   { name: '6', cent: 940 },
-  { name: '1', cent: 1200 }
+  { name: '1', cent: 1200 },
+  { name: '2', cent: 1420 }
 ]
 
 export default function Day23 () {
-  const [barangFreq, setBarangFreq] = useState(270)
+  const [baseFreq, setBaseFreq] = useState(274)
   const [tuning, setTuning] = useState(INITIAL_TUNING)
 
   const synthRef = useRef<Tone.Synth<Tone.SynthOptions> | null>(null)
@@ -32,8 +34,8 @@ export default function Day23 () {
     const options = {
       envelope: {
         attack: 0.001,
-        decay: 0.1,
-        sustain: 0.01,
+        decay: 1,
+        sustain: 0.05,
         release: 0.5
       }
     }
@@ -47,10 +49,10 @@ export default function Day23 () {
     synth.triggerAttackRelease(note, '4n')
   }
 
-  const handleBarangFreqChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleBaseFrequencyChange = (e: ChangeEvent<HTMLInputElement>) => {
     const freq = Number(e.target.value)
     if (!isNaN(freq)) {
-      setBarangFreq(freq)
+      setBaseFreq(freq)
     }
   }
 
@@ -70,14 +72,14 @@ export default function Day23 () {
               .map((wilah, index) => (
                 <button
                   key={index}
-                  onMouseDown={handleButtonClick(Math.round(barangFreq * Math.pow(2, wilah.cent / 1200)))}
+                  onMouseDown={handleButtonClick(Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)))}
                   className="border mx-1 px-6 py-20"
                 >
                   <span>
                     {wilah.name}
                   </span>
                   <br/>
-                  { Math.round(barangFreq * Math.pow(2, wilah.cent / 1200)) } hz
+                  { Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)) } hz
                 </button>
               ))
           }
@@ -85,20 +87,20 @@ export default function Day23 () {
 
         <div>
           <div>
-            <label><em>Barang</em> frequency</label>:
+            <label>Base frequency</label>:
             <br/>
             <input
-              value={barangFreq}
+              value={baseFreq}
               type="number"
               className="px-3 py-2 bg-transparent border mb-3"
-              onChange={handleBarangFreqChange}
+              onChange={handleBaseFrequencyChange}
             />
           </div>
           Intervals:
           <TuningPanel
             tuning={tuning}
-            lowest={-240}
-            highest={1200}
+            lowest={-480}
+            highest={1440}
             onTuningChange={handleTuningChange}
           />
         </div>
