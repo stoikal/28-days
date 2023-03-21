@@ -16,8 +16,6 @@ export default function Day14 () {
         const size = Math.max(1, entry.contentRect.width / 200)
         setFontSize(size)
       }
-
-      console.log('Size changed')
     })
 
     resizeObserver.observe(textarea)
