@@ -29,7 +29,7 @@ const content = [
   { day: 20, title: 'video', subtitle: 'Picture-in-Picture' },
   { day: 21, title: 'Emoji', subtitle: 'Clipboard API' },
   { day: 22, title: 'Eyes', subtitle: 'Gamepad API' },
-  { day: 23, title: 'Slendro', subtitle: 'Web Audio API' }
+  { day: 23, title: 'Laras Slendro', subtitle: 'Web Audio API' }
   // { day: 24, title: 'Color Collection', subtitle: 'Fetch API' },
   // { day: 25, title: 'Color Collection', subtitle: 'IndexedDB' },
   // { day: 26, title: 'Saron', subtitle: 'Web Audio API' },

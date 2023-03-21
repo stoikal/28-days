@@ -63,7 +63,7 @@ export default function Day23 () {
   return (
     <>
       <Head>
-        <title>Day 23 - Slendro</title>
+        <title>Day 23 - Laras Slendro</title>
       </Head>
       <main className="min-h-full bg-pink-400 flex flex-col items-center justify-center overflow-hidden">
         <div className="mb-32">
