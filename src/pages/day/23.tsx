@@ -65,27 +65,8 @@ export default function Day23 () {
       <Head>
         <title>Day 23 - Slendro</title>
       </Head>
-      <main className="min-h-full bg-pink-400 flex flex-col items-center justify-center">
-        <div className="p-4 mb-10 border">
-          {
-            tuning
-              .map((wilah, index) => (
-                <button
-                  key={index}
-                  onMouseDown={handleButtonClick(Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)))}
-                  className="border mx-1 px-6 py-20"
-                >
-                  <span>
-                    {wilah.name}
-                  </span>
-                  <br/>
-                  { Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)) } hz
-                </button>
-              ))
-          }
-        </div>
-
-        <div>
+      <main className="min-h-full bg-pink-400 flex flex-col items-center justify-center overflow-hidden">
+        <div className="mb-32">
           <div>
             <label>Base frequency</label>:
             <br/>
@@ -103,6 +84,25 @@ export default function Day23 () {
             highest={1440}
             onTuningChange={handleTuningChange}
           />
+        </div>
+
+        <div className="p-4 border">
+          {
+            tuning
+              .map((wilah, index) => (
+                <button
+                  key={index}
+                  onMouseDown={handleButtonClick(Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)))}
+                  className="border mx-1 px-6 py-20"
+                >
+                  <span>
+                    {wilah.name}
+                  </span>
+                  <br/>
+                  { Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)) } hz
+                </button>
+              ))
+          }
         </div>
       </main>
     </>
