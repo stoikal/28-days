@@ -31,10 +31,10 @@ const content = [
   { day: 22, title: 'Eyes', subtitle: 'Gamepad API' },
   { day: 23, title: 'Laras Slendro', subtitle: 'Web Audio API' },
   { day: 24, title: 'Grayscale', subtitle: 'File API' }
-  // { day: 25, title: 'Color Collection', subtitle: 'IndexedDB' },
-  // { day: 26, title: 'Saron', subtitle: 'Web Audio API' },
-  // { day: 27, title: '-', subtitle: '' },
-  // { day: 28, title: '-', subtitle: '' }
+  // { day: 25, title: 'URL Anatomy', subtitle: 'URL API' }
+  // { day: , title: 'Color Collection', subtitle: 'IndexedDB' },
+  // { day: , title: '', subtitle: 'Pointer events' },
+  // { day: , title: 'sorting ', subtitle: 'svg' }
 ]
 
 export default function Home () {
@@ -53,32 +53,29 @@ export default function Home () {
           <h1 className="text-2xl mb-3">
             <a href="https://developer.mozilla.org/en-US/docs/Web/API">28 Days of  Web APIs</a>
           </h1>
-          <div className="border border-gray-400 p-4">
-            <h2 className="text-xl mb-2">Contents:</h2>
-            <ul className="bg-white">
-              {
-                content.map((item, index) => (
-                  <li
-                    key={index}
-                    className="mb-1 hover:underline decoration-dotted"
+          <ul className="bg-white">
+            {
+              content.map((item, index) => (
+                <li
+                  key={index}
+                  className="mb-1 hover:underline decoration-dotted"
+                >
+                  <NextLink
+                    href={`/day/${index + 1}`}
+                    className="flex"
                   >
-                    <NextLink
-                      href={`/day/${index + 1}`}
-                      className="flex"
-                    >
-                      <div>
-                        <span>{index + 1}.&nbsp;</span>
-                      </div>
-                      <div className="flex flex-wrap">
-                        <span className="break-keep">{item.title}&nbsp;</span>
-                        <span className="break-keep text-gray-400">({item.subtitle})</span>
-                      </div>
-                    </NextLink>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
+                    <div>
+                      <span>{index + 1}.&nbsp;</span>
+                    </div>
+                    <div className="flex flex-wrap">
+                      <span className="break-keep">{item.title}&nbsp;</span>
+                      <span className="break-keep text-gray-400">({item.subtitle})</span>
+                    </div>
+                  </NextLink>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </main>
     </>
