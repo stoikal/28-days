@@ -50,7 +50,7 @@ export default function Home () {
         <div
           className="max-w-4xl mx-auto"
         >
-          <h1 className="text-2xl mb-3">
+          <h1 className="text-2xl mb-4">
             <a href="https://developer.mozilla.org/en-US/docs/Web/API">28 Days of  Web APIs</a>
           </h1>
           <ul className="bg-white">

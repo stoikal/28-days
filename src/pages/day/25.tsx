@@ -40,7 +40,7 @@ function Part ({ children, type }: PartProps) {
 }
 
 export default function Day25 () {
-  const [input, setInput] = useState('https://www.example.com:443/path/to/resource?sort=ascending')
+  const [input, setInput] = useState('https://www.example.com/path/to/resource?sort=ascending')
   const [, setError] = useState('')
   const [url, setUrl] = useState<URL | null>(null)
 
@@ -63,6 +63,9 @@ export default function Day25 () {
 
   const getDomainPrefix = (url: URL) => {
     const { protocol, origin, host } = url
+
+    if (!origin || origin === 'null') return ''
+
     const prefix = origin
       .replace(host, '')
       .replace(protocol, '')
@@ -83,10 +86,10 @@ export default function Day25 () {
       <main>
         <div className="max-w-4xl mx-auto p-6">
           <input
-          id="urlInput"
+            id="urlInput"
             value={input}
             type="text"
-            className="border mb-4 px-4 py-2 w-96 max-w-full"
+            className="rounded border mb-4 px-4 py-2 w-96 max-w-full"
             onChange={handleInputChange}
           />
           <br/>
