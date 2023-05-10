@@ -30,8 +30,8 @@ const content = [
   { day: 21, title: 'Emoji', subtitle: 'Clipboard API' },
   { day: 22, title: 'Eyes', subtitle: 'Gamepad API' },
   { day: 23, title: 'Laras Slendro', subtitle: 'Web Audio API' },
-  { day: 24, title: 'Grayscale', subtitle: 'File API' }
-  // { day: 25, title: 'URL Anatomy', subtitle: 'URL API' }
+  { day: 24, title: 'Grayscale', subtitle: 'File API' },
+  { day: 25, title: 'URL Anatomy', subtitle: 'URL API' }
   // { day: , title: 'Color Collection', subtitle: 'IndexedDB' },
   // { day: , title: '', subtitle: 'Pointer events' },
   // { day: , title: 'sorting ', subtitle: 'svg' }
