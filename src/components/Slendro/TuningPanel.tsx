@@ -17,7 +17,7 @@ type Props = {
 const GUIDE_STEP = 240 // cent
 // const HIGHLIGTED_GUIDE_STEP = 240 // cent
 const CENT_PER_PIXEL = 2 // amount
-const SNAP = 20 // cent
+const SNAP = 12 // cent
 
 export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Props) {
   const [tuningIndexInDrag, setTuningIndexInDrag] = useState<number | null>(null)

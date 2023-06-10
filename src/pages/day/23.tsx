@@ -17,15 +17,15 @@ type ExtWilah = Wilah & { note: number }
 type ExtTuning = ExtWilah[]
 
 const INITIAL_TUNING: Tuning = [
-  { name: '̣5', cent: -460 },
-  { name: '̣6', cent: -260 },
+  { name: '̣5', cent: -456 },
+  { name: '̣6', cent: -252 },
   { name: '1', cent: 0 },
-  { name: '2', cent: 220 },
+  { name: '2', cent: 216 },
   { name: '3', cent: 480 },
-  { name: '5', cent: 740 },
-  { name: '6', cent: 940 },
+  { name: '5', cent: 744 },
+  { name: '6', cent: 948 },
   { name: '1̇', cent: 1200 },
-  { name: '2̇', cent: 1420 }
+  { name: '2̇', cent: 1416 }
 ]
 
 const getNote = (baseFreq: number, cent: number) => {
