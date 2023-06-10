@@ -13,15 +13,15 @@ type Wilah = {
 type Tuning = Wilah[]
 
 const INITIAL_TUNING: Tuning = [
-  { name: '5', cent: -460 },
-  { name: '6', cent: -260 },
+  { name: '̣5', cent: -460 },
+  { name: '̣6', cent: -260 },
   { name: '1', cent: 0 },
   { name: '2', cent: 220 },
   { name: '3', cent: 480 },
   { name: '5', cent: 740 },
   { name: '6', cent: 940 },
-  { name: '1', cent: 1200 },
-  { name: '2', cent: 1420 }
+  { name: '1̇', cent: 1200 },
+  { name: '2̇', cent: 1420 }
 ]
 
 export default function Day23 () {
@@ -66,14 +66,14 @@ export default function Day23 () {
         <title>Day 23 - Laras Slendro</title>
       </Head>
       <main className="min-h-full bg-pink-400 flex flex-col items-center justify-center overflow-hidden">
-        <div className="mb-32">
+        <div className="mb-32 hidden lg:block">
           <div>
             <label>Base frequency</label>:
             <br/>
             <input
               value={baseFreq}
               type="number"
-              className="px-3 py-2 bg-transparent border mb-3"
+              className="px-3 py-2 bg-pink-300 border mb-3"
               onChange={handleBaseFrequencyChange}
             />
           </div>
@@ -86,21 +86,27 @@ export default function Day23 () {
           />
         </div>
 
-        <div className="p-4 border">
+        <div className="border flex flex-wrap p-3">
           {
             tuning
               .map((wilah, index) => (
-                <button
+                <div
                   key={index}
-                  onMouseDown={handleButtonClick(Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)))}
-                  className="border mx-1 px-6 py-20"
+                  className="p-2 w-1/3 lg:w-[11.11111%]"
                 >
-                  <span>
-                    {wilah.name}
-                  </span>
-                  <br/>
-                  { Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)) } hz
-                </button>
+                  <button
+                    onMouseDown={handleButtonClick(Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)))}
+                    className="w-full border px-5 py-20 bg-pink-50 hover:bg-white"
+                  >
+                    <span>
+                      {wilah.name}
+                    </span>
+                    <br/>
+                    <span className="whitespace-nowrap">
+                      { Math.round(baseFreq * Math.pow(2, wilah.cent / 1200)) } hz
+                    </span>
+                  </button>
+                </div>
               ))
           }
         </div>

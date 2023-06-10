@@ -139,7 +139,7 @@ export default function Day28 ({ tuning, lowest, highest, onTuningChange }: Prop
                 cursor: tuningIndexInDrag === null ? 'grab' : 'grabbing'
               }}
               role="button"
-              className="absolute h-full -translate-x-1/2 bg-black text-white select-none"
+              className="absolute h-full -translate-x-1/2 bg-gray-900 hover:bg-gray-800 text-white select-none"
               onMouseDown={createTuningItemHandler(index)}
             >
               <span>{ wilah.name }</span>
