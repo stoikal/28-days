@@ -213,7 +213,7 @@ export default function Day5 () {
         >
           <div
             ref={parentRef}
-            className="bg-white h-full"
+            className="bg-white h-full cursor-pointer"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
