@@ -18,7 +18,7 @@ type Enemy = {
   explode: boolean
 }
 
-export default function Canvas ({ tick }: Props) {
+export default function SpaceshipGame ({ tick }: Props) {
   const canvasRef = useRef(null)
 
   const bulletsRef = useRef<Bullet[]>([])
@@ -43,7 +43,7 @@ export default function Canvas ({ tick }: Props) {
       (keys.down.pressed && ship.angle !== 90)
     ) {
       // move counterclockwise
-      ship.substractAngle()
+      ship.subtractAngle()
     }
   }
 

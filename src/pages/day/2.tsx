@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import Canvas from '@/components/Canvas'
+import SpaceshipGame from '@/components/SpaceshipGame'
 
 export default function Day2 () {
   const [tick, setTick] = useState(0)
@@ -33,7 +33,7 @@ export default function Day2 () {
           placeItems: 'center'
         }}
       >
-        <Canvas tick={tick} />
+        <SpaceshipGame tick={tick} />
       </main>
     </>
   )

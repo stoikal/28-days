@@ -17,7 +17,7 @@ export const useSpaceShip = () => {
     })
   }
 
-  const substractAngle = () => {
+  const subtractAngle = () => {
     setAngle((prev) => {
       if (prev - speed < 0) {
         return prev + 360 - speed
@@ -32,6 +32,6 @@ export const useSpaceShip = () => {
     height: 10,
     base: 10,
     addAngle,
-    substractAngle
+    subtractAngle
   }
 }
