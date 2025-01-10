@@ -1,10 +1,7 @@
+import useFrame from '@/hooks/useFrame'
 import { useKeys } from '@/hooks/useKeys'
 import { useSpaceShip } from '@/hooks/useSpaceShip'
 import { useEffect, useRef, useState } from 'react'
-
-type Props = {
-  tick: number
-}
 
 type Bullet = {
   angle: number
@@ -18,7 +15,9 @@ type Enemy = {
   explode: boolean
 }
 
-export default function SpaceshipGame ({ tick }: Props) {
+export default function SpaceshipGame () {
+  const frame = useFrame()
+
   const canvasRef = useRef(null)
 
   const bulletsRef = useRef<Bullet[]>([])
@@ -114,8 +113,8 @@ export default function SpaceshipGame ({ tick }: Props) {
         }
       })
 
-    if (tick - lastEnemySpawn > 200 || lastEnemySpawn === 0) {
-      setLastEnemySpawn(tick)
+    if (frame - lastEnemySpawn > 200 || lastEnemySpawn === 0) {
+      setLastEnemySpawn(frame)
       enemies.push({
         angle: Math.random() * 359,
         radius: 5,
@@ -197,7 +196,7 @@ export default function SpaceshipGame ({ tick }: Props) {
 
   useEffect(() => {
     draw()
-  }, [tick])
+  }, [frame])
 
   return (
     <>

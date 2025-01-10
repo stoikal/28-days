@@ -1,25 +1,8 @@
+import React from 'react'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
 import SpaceshipGame from '@/components/SpaceshipGame'
 
 export default function Day2 () {
-  const [tick, setTick] = useState(0)
-
-  useEffect(() => {
-    let id: number
-
-    const animate = () => {
-      id = requestAnimationFrame(animate)
-      setTick(prev => prev + 1)
-    }
-
-    animate()
-
-    return () => {
-      cancelAnimationFrame(id)
-    }
-  }, [])
-
   return (
     <>
      <Head>
@@ -33,7 +16,7 @@ export default function Day2 () {
           placeItems: 'center'
         }}
       >
-        <SpaceshipGame tick={tick} />
+        <SpaceshipGame />
       </main>
     </>
   )
