@@ -12,8 +12,8 @@ export default function ResponsiveCanvas () {
     const canvas = canvasRef.current as HTMLCanvasElement
     const c = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    canvas.width = innerWidth - CANVAS_PADDING * 2
-    canvas.height = innerHeight - CANVAS_PADDING * 2
+    canvas.width = window.innerWidth - CANVAS_PADDING * 2
+    canvas.height = window.innerHeight - CANVAS_PADDING * 2
 
     c.beginPath()
     c.rect(0, 0, canvas.width, canvas.height)
